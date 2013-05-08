@@ -3,12 +3,10 @@
 #ifndef __UTIL_H
 #define __UTIL_H
 
-#include "jd_pretty.h"
-
-void test_init(void);
-void test_done(void);
+#include "jsondata.h"
 
 void test_main(void);
+void expect_leak(size_t size);
 
 #endif
 

@@ -1,8 +1,8 @@
-DIST_SUBDIRS = m4
+DIST_SUBDIRS = m4 t
 
 # EXTRA_DIST = jd_path.h jd_utf8.h
 
-SUBDIRS = . 
+SUBDIRS = . t
 
 ACLOCAL_AMFLAGS = -I m4
 

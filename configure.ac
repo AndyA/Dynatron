@@ -21,6 +21,7 @@ BT_PROG_CC_WARN
 AC_CONFIG_FILES([
 Makefile
 m4/Makefile
+t/Makefile
 ])
 
 AC_OUTPUT

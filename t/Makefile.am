@@ -1,8 +1,6 @@
-TESTBIN = 00misc array clone closure compare exception exit get \
-	  hash json jsonpath magic map model object path string \
-	  thread utf8
+TESTBIN = basic
 
-EXTRA_DIST = model.json jsonpath.json walk.json
+EXTRA_DIST = commands.json
 
 noinst_PROGRAMS = $(TESTBIN)
 
@@ -11,7 +9,7 @@ noinst_LTLIBRARIES = libtest-support.la
 libtest_support_la_SOURCES = tap.c tap.h util.c util.h jd_test.c jd_test.h
 libtest_support_la_LDFLAGS = -static
 
-LDADD = libtest-support.la ../libjsondata.la
+LDADD = libtest-support.la ../libdynatron.la
 
 test: $(noinst_PROGRAMS)
 	prove -e '' $(addprefix ./,$(noinst_PROGRAMS))
