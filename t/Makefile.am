@@ -4,7 +4,7 @@ TESTPERL = listen.t
 
 EXTRA_DIST = commands.json
 
-noinst_PROGRAMS = $(TESTBIN)
+noinst_PROGRAMS = wrap $(TESTBIN)
 
 noinst_LTLIBRARIES = libtest-support.la
 
@@ -13,13 +13,10 @@ libtest_support_la_LDFLAGS = -static
 
 LDADD = libtest-support.la ../libdynatron.la
 
-test-c: $(TESTBIN)
-	prove -e '' $(addprefix ./,$(TESTBIN))
+wrap_LDADD =
 
-test-perl: $(TESTPERL)
-	prove $(TESTPERL)
-
-test: test-c test-perl
+test: $(TESTBIN)
+	prove -e ./wrap $(TESTBIN) $(TESTPERL)
 
 valgrind: $(TESTBIN)
 	prove -e 'valgrind -q' $(addprefix ./,$(TESTBIN))
