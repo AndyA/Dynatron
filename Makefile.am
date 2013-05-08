@@ -24,15 +24,11 @@ libdynatron_la_SOURCES = dynatron.h utils.h dy_core.c \
 	dy_queue.c dy_thread.c utils.c
 
 libdynatron_la_CFLAGS = $(LIBAV_CFLAGS)
-
 libdynatron_la_LDFLAGS = -avoid-version $(LIBAV_LDFLAGS)
 
 dynatron_SOURCES = dynatron.c
-
 dynatron_CFAGS = $(LIBAV_CFLAGS)
-
 dynatron_LDFLAGS = $(LIBAV_LDFLAGS)
-
 dynatron_LDADD = libdynatron.la
 
 test: all
