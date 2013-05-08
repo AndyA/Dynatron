@@ -61,9 +61,8 @@ static void dy_log(unsigned level, const char *msg, va_list ap) {
     JD_3VARS(ldr, str, ln);
 
     ts(tmp, sizeof(tmp));
-    jd_printf(ldr, "%s | %5lu | %-7s | ",
-    tmp, (unsigned long) getpid(), lvl[level]);
-    jd_vprintf(str, msg, ap);
+    jd_sprintf(ldr, "%s | %5lu | %-7s | ", tmp, (unsigned long) getpid(), lvl[level]);
+    jd_vsprintf(str, msg, ap);
     split_lines(ln, str);
     count = jd_count(ln);
 

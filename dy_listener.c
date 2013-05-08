@@ -127,7 +127,7 @@ void dy_listener_send_error(const char *msg, ...) {
     jd_set_hash(vm, 4);
     jd_set_string(jd_lv(vm, "$.type"), "error");
     va_start(ap, msg);
-    jd_vprintf(err, msg, ap);
+    jd_vsprintf(err, msg, ap);
     dy_error("Sending error: %V", err);
     jd_assign(jd_lv(vm, "$.message"), err);
     va_end(ap);
