@@ -13,7 +13,6 @@ LIBOBJS=utils.o dy_message.o dy_despatch.o dy_main.o dy_log.o \
 OBJS=$(BINOBJS) $(LIBOBJS)
 DEPS=$(OBJS:.o=.d) 
 INST_BINS=$(PREFIX)/bin
-MYLIBS=../jsondata/libjsondata.a
 
 AVLIBS=libavcodec libavformat libavutil libswscale
 
@@ -23,6 +22,7 @@ CFLAGS+=$(shell pkg-config --cflags $(AVLIBS))
 LDFLAGS+=$(shell pkg-config --libs $(AVLIBS))
 
 LDFLAGS+=-lpthread
+LDFLAGS+=-ljsondata
 
 all: $(LIB) $(BINS)
 
@@ -33,7 +33,7 @@ version.h: VERSION
 	perl tools/version.pl > version.h
 
 %: %.o $(LIB)
-	$(CC) -o $@ $^ $(MYLIBS) $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.d: %.c version.h
 	@$(SHELL) -ec '$(CC) -MM $(CFLAGS) $< \
