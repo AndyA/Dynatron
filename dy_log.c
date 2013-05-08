@@ -46,33 +46,24 @@ static void ts(char *buf, size_t sz) {
   snprintf(buf + len, sz - len, ".%06lu", (unsigned long) tv.tv_usec);
 }
 
-static void split_lines(jd_var *out, jd_var *v) {
-  scope {
-    JD_SV(sep, "\n");
-    jd_split(out, v, sep);
-  }
-}
-
 static void dy_log(unsigned level, const char *msg, va_list ap) {
   if (level <= dy_log_level) scope {
+    const char *col_on = dy_log_colour ? lvl_col[level] : "";
+    const char *col_off = dy_log_colour ? COLOUR_RESET : "";
     char tmp[30];
     int i;
     size_t count;
-    JD_3VARS(ldr, str, ln);
+    jd_var *ldr = jd_nv(), *str = jd_nv(), *ln = jd_nv();
 
     ts(tmp, sizeof(tmp));
     jd_sprintf(ldr, "%s | %5lu | %-7s | ", tmp, (unsigned long) getpid(), lvl[level]);
     jd_vsprintf(str, msg, ap);
-    split_lines(ln, str);
+    jd_split(ln, str, jd_nsv("\n"));
     count = jd_count(ln);
 
     pthread_mutex_lock(&mutex);
     for (i = 0; i < count; i++) {
-      fprintf(stderr, "%s%s%s%s\n",
-              dy_log_colour ? lvl_col[level] : "",
-              jd_bytes(ldr, NULL), jd_bytes(jd_get_idx(ln, i), NULL),
-              dy_log_colour ? COLOUR_RESET : ""
-             );
+      jd_fprintf(stderr, "%s%V%V%s\n", col_on, ldr, jd_get_idx(ln, i), col_off);
     }
     pthread_mutex_unlock(&mutex);
   }
