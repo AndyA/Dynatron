@@ -15,10 +15,10 @@ static int clone_h(jd_var *self, jd_var *ctx, jd_var *arg) {
       JD_RETURN(0);
     }
 
-    JD_VAR(super);
+    jd_var *super = jd_nv();
     dy_object_name(self, super);
 
-    JD_HV(proto, 1);
+    jd_var *proto = jd_nhv(1);
     slot = jd_get_ks(proto, "config", 1);
     if (cfg = jd_get_ks(arg, "config", 0), cfg)
       jd_assign(slot, cfg);
@@ -46,7 +46,7 @@ static void despatch_message(jd_var *self, jd_var *msg) {
 
 static void describe(jd_var *self) {
   scope {
-    JD_2VARS(name, stash);
+    jd_var *name = jd_nv(), *stash = jd_nv();
     dy_object_name(self, name);
     dy_object_stash(self, stash);
     dy_debug("name: %V, stash: %lJ", name, stash);
@@ -58,7 +58,7 @@ static int run_h(jd_var *self, jd_var *ctx, jd_var *arg) {
   (void) arg;
   describe(self);
   for (;;) scope {
-    JD_VAR(msg);
+    jd_var *msg = jd_nv();
     dy_object_get_message(self, msg);
     dy_debug("%J got message %lJ", self, msg);
     despatch_message(self, msg);
@@ -68,7 +68,7 @@ static int run_h(jd_var *self, jd_var *ctx, jd_var *arg) {
 
 void dy_core_init(void) {
   scope {
-    JD_HV(obj, 1);
+    jd_var *obj = jd_nhv(1);
 
     dy_object_set_method(obj, "clone", clone_h);
     dy_object_set_method(obj, "run", run_h);

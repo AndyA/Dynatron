@@ -93,7 +93,7 @@ void dy_object_destroy(void) {
 
 void dy_object_register(const char *name, jd_var *o, const char *inherit) {
   scope {
-    JD_VAR(obj);
+    jd_var *obj = jd_nv();
 
     if (find_obj(name)) {
       dy_listener_send_error("Object %s already registered", name);

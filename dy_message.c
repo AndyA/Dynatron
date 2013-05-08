@@ -11,7 +11,7 @@ jd_var *dy_message_read(jd_var *out, dy_io_reader *rd) {
   scope {
     size_t paylen = 0, want;
     int state = 0;
-    JD_VAR(json);
+    jd_var *json = jd_nv();
 
     for (;;) {
       char *buf, *bp, *be;
@@ -62,19 +62,18 @@ jd_var *dy_message_read(jd_var *out, dy_io_reader *rd) {
 
 static void format_message(jd_var *out, jd_var *v) {
   scope {
-    JD_VAR(json);
-    JD_AV(msg, 2);
-    JD_SV(sep, "\n");
+    jd_var *json = jd_nv();
+    jd_var *msg = jd_nav(2);
     jd_to_json(json, v);
     jd_set_int(jd_push(msg, 1), jd_length(json));
     jd_assign(jd_push(msg, 1), json);
-    jd_join(out, sep, msg);
+    jd_join(out, jd_nsv("\n"), msg);
   }
 }
 
 void dy_message_write(jd_var *v, dy_io_writer *wr) {
   scope {
-    JD_VAR(msg);
+    jd_var *msg = jd_nv();
     size_t ml;
     const char *buf;
 

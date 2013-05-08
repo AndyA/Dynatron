@@ -36,7 +36,7 @@ void dy_despatch_thread(jd_var *arg) {
   (void) arg;
   dy_info("Starting despatcher");
   for (;;) scope {
-    JD_VAR(msg);
+    jd_var *msg = jd_nv();
     get_message(msg);
     dy_despatch_message(msg);
   }

@@ -74,8 +74,8 @@ int jdt_throws(void (*func)(void *), void *ctx, const char *want, const char *ms
   int rc = 0;
 
   scope {
-    JD_VAR(caught);
-    JD_SV(vwant, want);
+    jd_var *caught = jd_nv();
+    jd_var *vwant = jd_nsv(want);
 
     try {
       func(ctx);
@@ -93,7 +93,7 @@ int jdt_throws(void (*func)(void *), void *ctx, const char *want, const char *ms
 
 void jdt_diag(const char *msg, ...) {
   scope {
-    JD_VAR(vmsg);
+    jd_var *vmsg = jd_nv();
     va_list ap;
 
     va_start(ap, msg);

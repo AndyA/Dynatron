@@ -60,9 +60,7 @@ int main(int argc, char *argv[]) {
   dy_thread_create(dy_despatch_thread, NULL);
 
   for (argn = 0; argn < argc; argn++) scope {
-    JD_SV(arg, argv[argn]);
-    JD_VAR(msg);
-    jd_from_json(msg, arg);
+    jd_var *msg = jd_from_jsons(jd_nv(), argv[argn]);
     dy_despatch_enqueue(msg);
   }
 

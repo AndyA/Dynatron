@@ -18,7 +18,7 @@ static dy_queue *queue;
 
 static void listener(dy_io_reader *rd) {
   scope {
-    JD_VAR(msg);
+    jd_var *msg = jd_nv();
     while (dy_message_read(msg, rd)) {
       dy_debug("received: %lJ", msg);
       dy_despatch_enqueue(msg);
@@ -28,7 +28,7 @@ static void listener(dy_io_reader *rd) {
 
 static void sender(dy_io_writer *wr) {
   for (;;) scope {
-    JD_VAR(msg);
+    jd_var *msg = jd_nv();
     dy_queue_dequeue(queue, msg);
     dy_message_write(msg, wr);
     dy_debug("sent: %lJ", msg);
@@ -88,7 +88,7 @@ static void socket_listener(jd_var *arg) {
 
 static void merge(jd_var *out, const char *dflt, jd_var *in) {
   scope {
-    JD_SV(json, dflt);
+    jd_var *json = jd_nsv(dflt);
     jd_from_json(out, json);
     jd_merge(out, in, 0);
   }
@@ -99,7 +99,7 @@ static int listen_cb(jd_var *rv, jd_var *ctx, jd_var *arg) {
   (void) ctx;
 
   scope {
-    JD_VAR(conf);
+    jd_var *conf = jd_nv();
     merge(conf, "{\"config\":{\"port\":6809}}", arg);
     dy_thread_create(socket_listener, conf);
   }
@@ -111,7 +111,7 @@ static int ping_cb(jd_var *rv, jd_var *ctx, jd_var *arg) {
   (void) ctx;
   (void) arg;
   scope {
-    JD_HV(info, 3);
+    jd_var *info = jd_nhv(3);
     jd_set_string(jd_lv(info, "$.date"), v_date);
     jd_set_string(jd_lv(info, "$.version"), v_version);
     jd_set_string(jd_lv(info, "$.git_hash"), v_git_hash);
@@ -127,8 +127,8 @@ void dy_listener_send(jd_var *msg) {
 
 void dy_listener_send_error(const char *msg, ...) {
   scope {
-    JD_HV(vm, 4);
-    JD_VAR(err);
+    jd_var *vm = jd_nhv(4);
+    jd_var *err = jd_nv();
     va_list ap;
 
     jd_set_hash(vm, 4);
