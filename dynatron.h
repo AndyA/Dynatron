@@ -82,6 +82,7 @@ dy_queue *dy_queue_new(void);
 void dy_queue_free(dy_queue *q);
 void dy_queue_enqueue(dy_queue *q, jd_var *msg);
 void dy_queue_dequeue(dy_queue *q, jd_var *msg);
+size_t dy_queue_available(dy_queue *q);
 
 jd_var *dy_despatch_register(const char *verb, jd_closure_func f);
 void dy_despatch_enqueue(jd_var *msg);

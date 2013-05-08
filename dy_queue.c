@@ -40,5 +40,13 @@ void dy_queue_dequeue(dy_queue *q, jd_var *msg) {
   }
 }
 
+size_t dy_queue_available(dy_queue *q) {
+  size_t avail;
+  pthread_mutex_lock(&q->mutex);
+  avail = jd_count(&q->queue);
+  pthread_mutex_unlock(&q->mutex);
+  return avail;
+}
+
 /* vim:ts=2:sw=2:sts=2:et:ft=c
  */
