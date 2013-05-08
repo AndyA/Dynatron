@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
   set_vfpf(jd_vfprintf);
 
-/*  expect_leak(sizeof(struct tls_data_struct));*/
+  expect_leak(sizeof(struct tls_data_struct));
   for (i = 0; i < count; i++)
     test_main();
 
