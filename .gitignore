@@ -1,6 +1,8 @@
+.*.sw?
 /*.a
 /*.d
 /*.o
+/Session.vim
 /core
 /dynatron
 /tags
