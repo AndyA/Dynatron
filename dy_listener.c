@@ -41,6 +41,7 @@ static void *li_shim(void *arg) {
 }
 
 static void shim(int r, int w, jd_var *arg) {
+  (void) arg;
   dy_io_reader *rd = dy_io_new_reader(r, 16384);
   dy_io_writer *wr = dy_io_new_writer(w);
   pthread_t li;
@@ -94,6 +95,9 @@ static void merge(jd_var *out, const char *dflt, jd_var *in) {
 }
 
 static int listen_cb(jd_var *rv, jd_var *ctx, jd_var *arg) {
+  (void) rv;
+  (void) ctx;
+
   scope {
     JD_VAR(conf);
     merge(conf, "{\"config\":{\"port\":6809}}", arg);
@@ -103,6 +107,9 @@ static int listen_cb(jd_var *rv, jd_var *ctx, jd_var *arg) {
 }
 
 static int ping_cb(jd_var *rv, jd_var *ctx, jd_var *arg) {
+  (void) rv;
+  (void) ctx;
+  (void) arg;
   scope {
     JD_HV(info, 3);
     jd_set_string(jd_lv(info, "$.date"), v_date);

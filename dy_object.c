@@ -47,6 +47,8 @@ static void object_worker(jd_var *obj) {
 }
 
 static int object_tell(jd_var *rv, jd_var *ctx, jd_var *arg) {
+  (void) rv;
+  (void) ctx;
 
   /* TODO make this more general; dy_object_broadcast perhaps */
 

@@ -6,8 +6,6 @@
 #include "dynatron.h"
 #include "utils.h"
 
-typedef void (*dy_worker)(jd_var *arg);
-
 struct thread_context {
   pthread_t thd;
   dy_worker worker;

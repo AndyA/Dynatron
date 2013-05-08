@@ -51,7 +51,7 @@ static void dy_log(unsigned level, const char *msg, va_list ap) {
     const char *col_on = dy_log_colour ? lvl_col[level] : "";
     const char *col_off = dy_log_colour ? COLOUR_RESET : "";
     char tmp[30];
-    int i;
+    unsigned i;
     size_t count;
     jd_var *ldr = jd_nv(), *str = jd_nv(), *ln = jd_nv();
 

@@ -54,6 +54,8 @@ static void describe(jd_var *self) {
 }
 
 static int run_h(jd_var *self, jd_var *ctx, jd_var *arg) {
+  (void) ctx;
+  (void) arg;
   describe(self);
   for (;;) scope {
     JD_VAR(msg);

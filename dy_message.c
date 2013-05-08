@@ -43,7 +43,7 @@ jd_var *dy_message_read(jd_var *out, dy_io_reader *rd) {
         break;
       case 3:
         want = paylen;
-        if (want > got) want = got;
+        if (want > (size_t) got) want = got;
         jd_append_bytes(json, bp, want);
         dy_io_consume(rd, want);
         paylen -= want;
