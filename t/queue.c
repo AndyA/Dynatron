@@ -10,7 +10,7 @@
 static void test_queue(void) {
   scope {
     dy_queue *q;
-    jd_var *msg = jd_nhv(1), *got = jd_nv();
+    jd_var *msg = jd_nhv(1), *want = jd_nhv(1), *got = jd_nv();
     int i;
 
     q = dy_queue_new();
@@ -23,9 +23,9 @@ static void test_queue(void) {
     is(dy_queue_available(q), 5, "5 items in queue");
 
     for (i = 0; i < 5; i++) {
-      jd_set_int(jd_get_ks(msg, "sn", 1), i);
+      jd_set_int(jd_get_ks(want, "sn", 1), i);
       dy_queue_dequeue(q, got);
-      jdt_is(got, msg, "message %d", i);
+      jdt_is(got, want, "message %d", i);
     }
 
     is(dy_queue_available(q), 0, "0 items in queue");
