@@ -1,5 +1,7 @@
 TESTBIN = basic
 
+TESTPERL = listen.t
+
 EXTRA_DIST = commands.json
 
 noinst_PROGRAMS = $(TESTBIN)
@@ -11,8 +13,13 @@ libtest_support_la_LDFLAGS = -static
 
 LDADD = libtest-support.la ../libdynatron.la
 
-test: $(noinst_PROGRAMS)
-	prove -e '' $(addprefix ./,$(noinst_PROGRAMS))
+test-c: $(TESTBIN)
+	prove -e '' $(addprefix ./,$(TESTBIN))
 
-valgrind: $(noinst_PROGRAMS)
-	prove -e 'valgrind -q' $(addprefix ./,$(noinst_PROGRAMS))
+test-perl: $(TESTPERL)
+	prove $(TESTPERL)
+
+test: test-c test-perl
+
+valgrind: $(TESTBIN)
+	prove -e 'valgrind -q' $(addprefix ./,$(TESTBIN))
