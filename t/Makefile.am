@@ -14,7 +14,7 @@ noinst_PROGRAMS = wrap $(TESTBIN)
 
 noinst_LTLIBRARIES = libtest-support.la
 
-libtest_support_la_SOURCES = tap.c tap.h util.c util.h jd_test.c jd_test.h
+libtest_support_la_SOURCES = tap.c tap.h framework.c framework.h jd_test.c jd_test.h
 libtest_support_la_LDFLAGS = -static $(LIBAV_LDFLAGS)
 
 LDADD = libtest-support.la ../libdynatron.la
